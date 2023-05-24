@@ -1,0 +1,40 @@
+defaults:
+  - _self_
+  - dataset: mnist
+  - model: ${dataset}_pixelcnn
+
+exp_name: "mnist-exp-0"
+artifacts_path: /logs/pixelcnn
+seed: 156
+num_epochs: 25
+log_every_n_steps: 100
+accelerator: "gpu"
+devices: 1
+pretrained_path: null
+
+optimizer:
+  _target_: torch.optim.Adam
+  lr: 0.001
+
+logger:
+  _target_: pytorch_lightning.loggers.WandbLogger
+  project: pixelcnn
+  name: ${..exp_name}
+
+callbacks:
+  - _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    monitor: val_loss
+    mode: min
+    save_top_k: 1
+    save_weights_only: False
+    dirpath: ${...artifacts_path}/${...exp_name}/checkpoints
+    filename: "{epoch}-{val_loss:.2f}"
+  - _target_: pytorch_lightning.callbacks.LearningRateMonitor
+    logging_interval: step
+
+
+hydra:
+  job:
+    chdir: False
+  run:
+    dir: ${...artifacts_path}/${...exp_name}

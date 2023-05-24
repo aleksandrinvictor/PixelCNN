@@ -1,0 +1,33 @@
+train_dataset: &train_dataset
+  _target_: src.datasets.CIFAR10
+  root: "./datasets/cifar"
+  is_train: True
+  transforms:
+    _target_: albumentations.Compose
+    transforms:
+    - _target_: albumentations.pytorch.ToTensorV2
+
+val_dataset: &val_dataset
+  _target_: src.datasets.CIFAR10
+  root: "./datasets/cifar"
+  is_train: False
+  transforms:
+    _target_: albumentations.Compose
+    transforms:
+    - _target_: albumentations.pytorch.ToTensorV2
+
+train_dataloader:
+  _target_: torch.utils.data.DataLoader
+  dataset: *train_dataset
+  batch_size: 64
+  num_workers: 4
+  shuffle: True
+  drop_last: True
+
+val_dataloader:
+  _target_: torch.utils.data.DataLoader
+  dataset: *val_dataset
+  batch_size: 64
+  num_workers: 4
+  shuffle: False
+  drop_last: False

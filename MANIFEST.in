@@ -1,0 +1,5 @@
+exclude src/pl.py
+exclude src/convert_checkpoint.py
+exclude src/train.py
+exclude src/generate.py
+prune src/datasets

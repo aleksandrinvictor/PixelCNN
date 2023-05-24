@@ -1,0 +1,40 @@
+[tool.black]
+line-length = 120
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+/(
+  | \.git
+  | \.tox
+  | \*venv
+)/
+'''
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pixelcnn"
+version = "0.7.0"
+authors = [
+  { name = "Aleksandrin Victor", email = "aleksandrinvictor@gmail.com" },
+]
+description = "PixellCNN model"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = ["torch>=1.12.1", "tqdm>=4.63.0"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3.7",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+license = { file = "LICENSE" }
+keywords = ["pixelcnn", "generative model"]
+
+[project.urls]
+"Homepage" = "https://github.com/aleksandrinvictor/PixelCNN"

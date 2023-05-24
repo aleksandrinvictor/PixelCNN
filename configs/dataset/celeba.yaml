@@ -1,0 +1,45 @@
+train_dataset: &train_dataset
+  _target_: src.datasets.CelebA
+  root: "./datasets/celebA/"
+  split: "train"
+  transforms:
+    _target_: albumentations.Compose
+    transforms:
+      - _target_: albumentations.CenterCrop
+        height: 148
+        width: 148
+      - _target_: albumentations.Resize
+        height: 32
+        width: 32
+      - _target_: albumentations.pytorch.ToTensorV2
+
+val_dataset: &val_dataset
+  _target_: src.datasets.CelebA
+  root: "./datasets/celebA/"
+  split: "valid"
+  transforms:
+    _target_: albumentations.Compose
+    transforms:
+      - _target_: albumentations.CenterCrop
+        height: 148
+        width: 148
+      - _target_: albumentations.Resize
+        height: 32
+        width: 32
+      - _target_: albumentations.pytorch.ToTensorV2
+
+train_dataloader:
+  _target_: torch.utils.data.DataLoader
+  dataset: *train_dataset
+  batch_size: 64
+  num_workers: 4
+  shuffle: True
+  drop_last: True
+
+val_dataloader:
+  _target_: torch.utils.data.DataLoader
+  dataset: *val_dataset
+  batch_size: 64
+  num_workers: 4
+  shuffle: False
+  drop_last: False
